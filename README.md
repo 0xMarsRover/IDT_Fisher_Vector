@@ -10,29 +10,30 @@ The project implements an activity recognition system trained on the UCF101 data
 3. State-of-the-art performance for large action/event video datasets
 4. Rudimentary baseline experiment implemented in baseline.py
 
-Tunable parameters:
- *Number of modes used to construct Gaussian mixture models (120)
- *Option to reduce dimensions of the 5 IDTF descriptors using PCA (500)
- *Choice of classification model
+ Tunable parameters:
+1. Number of modes used to construct Gaussian mixture models (120)
+2. Option to reduce dimensions of the 5 IDTF descriptors using PCA (500)
+3. Choice of classification model
 
 
 ## Requirement
 
-1. Improved Dense Trajectories: (Using OpenCV 2.4.13) [http://lear.inrialpes.fr/people/wang/improved_trajectories] 
-In addition, the OpenCV 2.4.13 should be compiled by hand. How to install: [https://blog.csdn.net/woainishifu/article/details/77449373]
+1. [Improved Dense Trajectories](http://lear.inrialpes.fr/people/wang/improved_trajectories) using OpenCV 2.4.13.  
+In addition, the OpenCV 2.4.13 should be compiled by hand.  
+[How to install OpenCV2.4.13](https://blog.csdn.net/woainishifu/article/details/77449373)
 
-2. Yael library (v438): to compute the Fisher Vectors and GMMs. [http://yael.gforge.inria.fr]
-How to install: [https://blog.csdn.net/Running_J/article/details/52151708]
+2. Yael library (v438): to compute the Fisher Vectors and GMMs.  
+[Yael Intro](http://yael.gforge.inria.fr)  
+[How to install Yael](https://blog.csdn.net/Running_J/article/details/52151708)
 
-
-3. scikit-learn (0.20.0): for classification models. [http://scikit-learn.org/stable/]
-
-4. ffmpeg would be isntalled. (version 2.8.15)
+3. Scikit-learn (0.20.0): for classification models.  
+[Sklearn Intro](http://scikit-learn.org/stable/)
+4. ffmpeg would be isntalled. (version 2.8.15)  
 `sudo apt-get install fmpeg`
 
-5. UCF101 dataset: [http://crcv.ucf.edu/data/UCF101.php]
+5.  [UCF101 dataset](http://crcv.ucf.edu/data/UCF101.php)
 
-
+## Descriptions
 
 pipeline.sh illustrates the list of commands required to execute the pipeline. Before this pipeline, please modify some file paths in the code:
 1. classify_experiment.py: training_output, testing_output
@@ -46,88 +47,82 @@ pipeline.sh illustrates the list of commands required to execute the pipeline. B
 
 
 Description of files:
-1. computeIDTF.py
-	*Resize the videos using ffmpeg.py file to 320x240
-	*Execute the IDTF binary, which is hard-coded in the file.
-	*The IDTF binary can be downloaded at http://lear.inrialpes.fr/people/wang/improved_trajectories
-	*saves temporary resized files in ./tmp directory
+1. computeIDTF.py:  
+    1. Resize the videos using ffmpeg.py file to 320x240.  
+    2. Execute the IDTF binary, which is hard-coded in the file.  
+    3. The [IDTF binary](http://lear.inrialpes.fr/people/wang/improved_trajectories) can be downloaded.  
+    4. saves temporary resized files in ./tmp directory  
 
+2. ffmpeg.py  
+    1. Python wrapper for basic ffmpeg operations, and used to resize the videos.  
 
-2. ffmpeg.py
-	Python wrapper for basic ffmpeg operations. Used to resize the videos.
+3. gmm.py  
+	1. Computes the gmms.  
 
-
-3. gmm.py
-	*Computes the gmms.
-
-	Calls the computeIDTF module to generate the .feature video files that will be used to create GMMs
+	2. Calls the computeIDTF module to generate the .feature video files that will be used to create GMMs
 	These .feature files will be stored in the ./GMM_IDTFs directory.
-	Each .feature file is on the order of 200MB.
+	Each .feature file is on the order of 200MB.  
 
-	Computes GMM for each of the 5 IDTF descriptor types (trajs, hogs, hofs, mbhxs, mbhys).
-	Saves each of the GMMs in the specified file using python temporaryFile
-
-
+	3. Computes GMM for each of the 5 IDTF descriptor types (trajs, hogs, hofs, mbhxs, mbhys).
+	Saves each of the GMMs in the specified file using python temporaryFile.  
 
 4. IDT_feature.py
-	*Handles a improved trajectory feature point
+	1. Handles a improved trajectory feature point
 	The .feature files contain IDT features for each video. A single IDTF contains a few different pieces of
 	information as described in http://lear.inrialpes.fr/people/wang/improved_trajectories
 
-	Most importantly, each IDTF contains each of the following descriptors.
-	* trajectory
-	* hog
-	* hof
-	* mbhx
-	* mbhy
+	2. Most importantly, each IDTF contains each of the following descriptors.
+	    1. trajectory
+        2. hog
+        3. hof
+        4. mbhx
+        5. mbhy
 
 5. computeFVs.py
-	*extract IDTFs and compute the Fisher Vectors (FVs) for
-	each of the videos in the input list (vid_in).
-	The training and testing file splits are included in text
-	files
-	The Fisher Vectors are output in the ./UCF101_Fishers directory.
+	1. extract IDTFs and compute the Fisher Vectors (FVs) for each of the videos in the input list (vid_in).
+	2. The training and testing file splits are included in text files.
+	3. The Fisher Vectors are output in the ./UCF101_Fishers directory.
 
 6. ThreadPool.py
-	Python module I used to parallelize the computeFVs script.
+	1. Python module I used to parallelize the computeFVs script.
 	
 7. computeFVstream
-	Recieves stdin stream of IDTFs generated by the IDTF binary.
-	Converts an IDTF from a video into a fisher vector.
-	Prereq: GMM must have already been computed.
+	1. Recieves stdin stream of IDTFs generated by the IDTF binary.
+	2. Converts an IDTF from a video into a fisher vector.
+	3. Prereq: GMM must have already been computed.
 
 
 8. computeFV.py
-	*Encodes a fisher vector. Requires IDTFs as input
+	1. Encodes a fisher vector. Requires IDTFs as input
 
 9. compute_UC101_class_index.py
-	Builds a dictionary of UCF101 class names to class index.
+	1. Builds a dictionary of UCF101 class names to class index.
 
 10. classify_library.py
-	Custom library of methods useful when optimizing and working with the classifiers.
+	1. Custom library of methods useful when optimizing and working with the classifiers.
 
 
 11. classify_experiment.py
-	Script used to experiment with different settings for hyperparameters for SVM 
-	classifiers.
+	1. Script used to experiment with different settings for hyperparameters for SVM classifiers.
 
 12. train_classify.py
-	Python script to optimize the choice of hyperparameters for SVM classifiers.
-	Outputs the results in the GridSearch_ouput file.
+	1. Python script to optimize the choice of hyperparameters for SVM classifiers.
+	2. Outputs the results in the GridSearch_ouput file.
 
 
 13. baseline.py (have not tried yet)
-	Implements the baseline experiment. The baseline result involves extracting the
-	first frame from each video and using this single image as the content to 
-	perform classification. The first frame for every video is resized to 240 x 320.
-	PCA is performed on each image in order to reduce the dimensions. A multiclass
-	linear SVM is used to classify the videos.
+	1. Implements the baseline experiment. 
+	2. The baseline result involves extracting the first frame from each video and using this single image as the content to perform classification. 
+	3. The first frame for every video is resized to 240 x 320.
+	4. PCA is performed on each image in order to reduce the dimensions. 
+	5. A multiclass linear SVM is used to classify the videos.
 
 14. improved_trajectory_release/ (dir)
-	Extract IDT features from videos, written in C++. Before running, it should be compiled by using make commend.
+	1. Extract IDT features from videos, written in C++. 
+	2. Before running, it should be compiled by using make commend.
 
 
 ## Rerference
-Khurram Soomro, Amir Roshan Zamir and Mubarak Shah, UCF101: A Dataset of 101 Human Action Classes From Videos in The Wild., CRCV-TR-12-01, November, 2012. 
+1. Khurram Soomro, Amir Roshan Zamir and Mubarak Shah, UCF101: A Dataset of 101 Human Action Classes From Videos in The Wild., CRCV-TR-12-01, November, 2012. 
 
-Many thanks to the open project at github [https://github.com/anenbergb/CS221_Project]
+2. Many thanks to the open project at github [https://github.com/anenbergb/CS221_Project]()
