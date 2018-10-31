@@ -1,0 +1,39 @@
+INFO:root:Start Time: 2018-10-31 15:17
+INFO:root:class 1, AP = 0.626
+INFO:root:class 2, AP = 0.489
+INFO:root:class 3, AP = 0.557
+INFO:root:class 4, AP = 0.767
+INFO:root:class 5, AP = 0.806
+INFO:root:class 6, AP = 0.851
+INFO:root:class 7, AP = 0.493
+INFO:root:class 8, AP = 0.776
+INFO:root:class 9, AP = 0.966
+INFO:root:class 10, AP = 0.993
+INFO:root:class 11, AP = 0.911
+INFO:root:class 12, AP = 1.000
+INFO:root:class 13, AP = 0.404
+INFO:root:class 14, AP = 0.899
+INFO:root:class 15, AP = 0.978
+INFO:root:class 16, AP = 0.846
+INFO:root:class 17, AP = 0.839
+INFO:root:class 18, AP = 0.914
+INFO:root:class 19, AP = 1.000
+INFO:root:class 20, AP = 0.389
+INFO:root:class 21, AP = 1.000
+INFO:root:class 22, AP = 0.992
+INFO:root:class 23, AP = 0.370
+INFO:root:class 24, AP = 0.361
+INFO:root:class 25, AP = 0.922
+INFO:root:class 26, AP = 0.979
+INFO:root:class 27, AP = 0.710
+INFO:root:class 28, AP = 0.970
+INFO:root:class 29, AP = 0.455
+INFO:root:class 30, AP = 0.507
+INFO:root:mean AP = 0.759
+INFO:root:mAP, accuracy_score, avg_Precision, avg_Recall
+INFO:root:(0.7589671880285965, 0.7271937445699392, 0.7370688102496957, 0.7312997418301316)
+INFO:root:Complete Evaluation
+DEBUG:matplotlib.font_manager:findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans (u'/usr/local/lib/python2.7/dist-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+DEBUG:matplotlib.font_manager:findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans (u'/usr/local/lib/python2.7/dist-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000
+INFO:root:End Time: 2018-10-31 15:19
+INFO:root:==============================================================
