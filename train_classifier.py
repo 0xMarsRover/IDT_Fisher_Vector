@@ -20,8 +20,6 @@ class_index = class_index_file_loaded['class_index'][()]
 index_class = class_index_file_loaded['index_class'][()]
 
 
-# In[7]:
-
 #training_output = '/Users/Bryan/CS/CS_Research/code/CS221/UCF101_Fishers/train'
 #testing_output = '/Users/Bryan/CS/CS_Research/code/CS221/UCF101_Fishers/test'
 
@@ -35,11 +33,7 @@ testing = [filename for filename in os.listdir(testing_output) if filename.endsw
 training_dict = classify_library.toDict(training)
 testing_dict = classify_library.toDict(testing)
 
-####################################################################
-####################################################################
-################################## Script starts
-
-
+###Script starts
 
 
 X_train_vids = classify_library.limited_input1(training_dict, 1000)
@@ -54,7 +48,7 @@ X_test, Y_test = classify_library.make_FV_matrix(X_test_vids,testing_output, cla
 training_PCA = classify_library.limited_input1(training_dict,40)
 X_PCA, _ = classify_library.make_FV_matrix(training_PCA,training_output, class_index)
 
-n_components = 1000
+n_components = 500
 pca = PCA(n_components=n_components)
 pca.fit(X_PCA)
 X_train_PCA = pca.transform(X_train)
@@ -63,7 +57,7 @@ X_test_PCA = pca.transform(X_test)
 #Exhaustive Grid Search
 
 C = [1, 10, 50, 100, 1000]
-loss = ['l1', 'l2']
+loss = ['hinge', 'l2']
 penalty = ['l2']
 kernel = ['poly', 'rbf', 'sigmoid']
 gamma = [0.01, 0.001, 0.0001]

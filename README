@@ -1,35 +1,51 @@
-This python project implements an activity recognition system trained on the UCF101 data set.
 
-Some highlights include:
+# Improved Dense Trajectory with Fisher Vector
 
-*A full pipeline from Dense Trajectory raw features to Fisher Vectors
-*Raw features are piped to the Fisher Vector generator, eliminating the need to store the large raw features
-*State-of-the-art performance for large action/event video datasets
-*Rudimentary baseline experiment implemented in baseline.py
+The project implements an activity recognition system trained on the UCF101 dataset (30 classes involved).
+
+## Keypoints
+
+1. A full pipeline from Dense Trajectory raw features to Fisher Vectors
+2. Raw features are piped to the Fisher Vector generator, eliminating the need to store the large raw features
+3. State-of-the-art performance for large action/event video datasets
+4. Rudimentary baseline experiment implemented in baseline.py
 
 Tunable parameters:
- *Number of modes used to construct Gaussian mixture models
- *Option to reduce dimensions of the 5 IDTF descriptors using PCA
+ *Number of modes used to construct Gaussian mixture models (120)
+ *Option to reduce dimensions of the 5 IDTF descriptors using PCA (500)
  *Choice of classification model
 
-The project depends on:
-*Improved Dense Trajectories:
-	http://lear.inrialpes.fr/people/wang/improved_trajectories
-*Yael library: to compute the Fisher Vectors and GMMs.
-	http://yael.gforge.inria.fr
-*scikit-learn: for classification models.
-	http://scikit-learn.org/stable/
-*UCF101 dataset:
-	http://crcv.ucf.edu/data/UCF101.php
+
+## Requirement
+
+1. Improved Dense Trajectories: (Using OpenCV 2.4.13) [http://lear.inrialpes.fr/people/wang/improved_trajectories] 
+In addition, the OpenCV 2.4.13 should be compiled by hand. How to install: [https://blog.csdn.net/woainishifu/article/details/77449373]
+
+2. Yael library (v438): to compute the Fisher Vectors and GMMs. [http://yael.gforge.inria.fr]
+How to install: [https://blog.csdn.net/Running_J/article/details/52151708]
+
+
+3. scikit-learn (0.20.0): for classification models. [http://scikit-learn.org/stable/]
+
+4. ffmpeg would be isntalled. (version 2.8.15)
+`sudo apt-get install fmpeg`
+
+5. UCF101 dataset: [http://crcv.ucf.edu/data/UCF101.php]
 
 
 
-execute_script.sh illustrates the list of commands required to execute the pipeline.
+pipeline.sh illustrates the list of commands required to execute the pipeline. Before this pipeline, please modify some file paths in the code:
+1. classify_experiment.py: training_output, testing_output
+2. classify_library.py: class_index_file, training_output, testing_output
+3. computeFVstream.py: sys.path.append() for yael lib in line 4
+4. computeIDTF.py: ucf101_path, dtBin, tmpDir
+5. gmm.py: GMM_dir, sys.path.append() for yael lib in line 9
+6. pipeline.sh: all paths should be changed.
+7. train_classifier.py: class_index_file, training_output, testing_output
+
+
 
 Description of files:
-
-
-
 1. computeIDTF.py
 	*Resize the videos using ffmpeg.py file to 320x240
 	*Execute the IDTF binary, which is hard-coded in the file.
@@ -100,10 +116,18 @@ Description of files:
 	Outputs the results in the GridSearch_ouput file.
 
 
-13. baseline.py
+13. baseline.py (have not tried yet)
 	Implements the baseline experiment. The baseline result involves extracting the
 	first frame from each video and using this single image as the content to 
 	perform classification. The first frame for every video is resized to 240 x 320.
 	PCA is performed on each image in order to reduce the dimensions. A multiclass
 	linear SVM is used to classify the videos.
 
+14. improved_trajectory_release/ (dir)
+	Extract IDT features from videos, written in C++. Before running, it should be compiled by using make commend.
+
+
+## Rerference
+Khurram Soomro, Amir Roshan Zamir and Mubarak Shah, UCF101: A Dataset of 101 Human Action Classes From Videos in The Wild., CRCV-TR-12-01, November, 2012. 
+
+Many thanks to the open project at github [https://github.com/anenbergb/CS221_Project]

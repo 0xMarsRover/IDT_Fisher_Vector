@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 ## This file implements a basic linear classifier approach to detecting action categories.

@@ -4,6 +4,7 @@ Can execute this as a script to populate the GMM or load it as a module
 The IDTF features are temporarily saved at the GMM_dir
 Pca reduction on each descriptor is set to false by default.
 """
+
 import sys, os, random
 sys.path.append("/home/parallels/Downloads/yael_v438")
 import computeIDTF, IDT_feature, computeFV

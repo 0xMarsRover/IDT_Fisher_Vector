@@ -8,7 +8,6 @@ from tempfile import TemporaryFile
 Encodes a fisher vector.
 """
 
-
 def create_fisher_vector(gmm_list, video_desc, fisher_path):
   """
   expects a single video_descriptors object. videos_desciptors objects are defined in IDT_feature.py
