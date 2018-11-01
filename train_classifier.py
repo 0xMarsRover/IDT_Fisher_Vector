@@ -15,7 +15,7 @@ from sklearn.decomposition import PCA
 import classify_library
 #class_index_file = "/Users/Bryan/CS/CS_Research/code/CS221/class_index.npz"
 class_index_file = "/home/parallels/Documents/idt_fv/class_index.npz"
-lass_index_file_loaded = np.load(class_index_file)
+class_index_file_loaded = np.load(class_index_file)
 class_index = class_index_file_loaded['class_index'][()]
 index_class = class_index_file_loaded['index_class'][()]
 
@@ -57,7 +57,7 @@ X_test_PCA = pca.transform(X_test)
 #Exhaustive Grid Search
 
 C = [1, 10, 50, 100, 1000]
-loss = ['hinge', 'l2']
+loss = ['hinge', 'squared_hinge']
 penalty = ['l2']
 kernel = ['poly', 'rbf', 'sigmoid']
 gamma = [0.01, 0.001, 0.0001]

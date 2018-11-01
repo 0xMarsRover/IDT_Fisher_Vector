@@ -31,7 +31,6 @@ def create_fisher_vector(gmm_list, video_desc, fisher_path):
     # apply the PCA to the vid_trajectory descriptor
     #each image_desc is of size (X,TRAJ_DIM). Pca_tranform is of size (TRAJ_DIM,TRAJ_DIM/2)
     descrip = descriptor.astype('float32') - mean
-    print "11"
     print type(gmm),type(mean),type(pca_transform)
     print len(gmm), len(mean), len(pca_transform)
     if pca_transform.all != None:
